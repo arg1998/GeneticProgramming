@@ -1,0 +1,37 @@
+digraph {
+"00_comment_00" [label="G : 18
+F : 2
+D : 4
+W : 4
+n : 9" , shape="box" , color="white"]
+"0_NAND" -> "1_NAND";
+"0_NAND" [label="NAND"];
+"1_NAND" [label="NAND"];
+"0_NAND" -> "2_NAND";
+"0_NAND" [label="NAND"];
+"2_NAND" [label="NAND"];
+"1_NAND" -> "3_X";
+"1_NAND" [label="NAND"];
+"3_X" [label="X"];
+"3_X" [shape="box"];
+"1_NAND" -> "4_X";
+"1_NAND" [label="NAND"];
+"4_X" [label="X"];
+"4_X" [shape="box"];
+"2_NAND" -> "5_NAND";
+"2_NAND" [label="NAND"];
+"5_NAND" [label="NAND"];
+"2_NAND" -> "6_X";
+"2_NAND" [label="NAND"];
+"6_X" [label="X"];
+"6_X" [shape="box"];
+"5_NAND" -> "7_X";
+"5_NAND" [label="NAND"];
+"7_X" [label="X"];
+"7_X" [shape="box"];
+"5_NAND" -> "8_Y";
+"5_NAND" [label="NAND"];
+"8_Y" [label="Y"];
+"8_Y" [shape="box"];
+
+}

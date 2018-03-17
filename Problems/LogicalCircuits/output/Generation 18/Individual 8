@@ -1,0 +1,58 @@
+digraph {
+"00_comment_00" [label="G : 18
+F : 3
+D : 4
+W : 8
+n : 15" , shape="box" , color="white"]
+"0_NAND" -> "1_NAND";
+"0_NAND" [label="NAND"];
+"1_NAND" [label="NAND"];
+"0_NAND" -> "2_NAND";
+"0_NAND" [label="NAND"];
+"2_NAND" [label="NAND"];
+"1_NAND" -> "3_NAND";
+"1_NAND" [label="NAND"];
+"3_NAND" [label="NAND"];
+"1_NAND" -> "4_NAND";
+"1_NAND" [label="NAND"];
+"4_NAND" [label="NAND"];
+"2_NAND" -> "5_NAND";
+"2_NAND" [label="NAND"];
+"5_NAND" [label="NAND"];
+"2_NAND" -> "6_NAND";
+"2_NAND" [label="NAND"];
+"6_NAND" [label="NAND"];
+"3_NAND" -> "7_Y";
+"3_NAND" [label="NAND"];
+"7_Y" [label="Y"];
+"7_Y" [shape="box"];
+"3_NAND" -> "8_X";
+"3_NAND" [label="NAND"];
+"8_X" [label="X"];
+"8_X" [shape="box"];
+"4_NAND" -> "9_X";
+"4_NAND" [label="NAND"];
+"9_X" [label="X"];
+"9_X" [shape="box"];
+"4_NAND" -> "10_Y";
+"4_NAND" [label="NAND"];
+"10_Y" [label="Y"];
+"10_Y" [shape="box"];
+"5_NAND" -> "11_X";
+"5_NAND" [label="NAND"];
+"11_X" [label="X"];
+"11_X" [shape="box"];
+"5_NAND" -> "12_Y";
+"5_NAND" [label="NAND"];
+"12_Y" [label="Y"];
+"12_Y" [shape="box"];
+"6_NAND" -> "13_X";
+"6_NAND" [label="NAND"];
+"13_X" [label="X"];
+"13_X" [shape="box"];
+"6_NAND" -> "14_Y";
+"6_NAND" [label="NAND"];
+"14_Y" [label="Y"];
+"14_Y" [shape="box"];
+
+}
