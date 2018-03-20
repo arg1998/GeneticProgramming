@@ -23,17 +23,6 @@ truth_table = \
         [[1, 1], 0]
     ]
 
-# truth_table = \
-#     [
-#         [[0, 0, 0], 1],
-#         [[0, 0, 1], 0],
-#         [[0, 1, 0], 1],
-#         [[0, 1, 1], 0],
-#         [[1, 0, 0], 1],
-#         [[1, 0, 1], 0],
-#         [[1, 1, 0], 1],
-#         [[1, 1, 1], 1],
-#     ]
 total_combinations = 2 ** len(terminal_set)
 
 gp = GP(depth_range, function_set, terminal_set, pop_size, tournament_size, mutation_methods, mutation_rate, elitism)
