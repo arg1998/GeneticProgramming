@@ -27,6 +27,7 @@ class Node:
         self.value = value
         self.index_id: int = index_id
         self.parent: Node = parent
+        self.level = 0  # level of this node in tree
 
     def copy(self):
         """

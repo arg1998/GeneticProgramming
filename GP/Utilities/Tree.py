@@ -20,6 +20,8 @@ class Tree:
         self.depth = depth
         self.width = 0
         self.terminal_set = terminal_set
+        self.all_terminals: list = []  # contains all terminals in the tree
+        self.all_functions: list = []  # contains all functions in the tree
         self.functions = function_set
         self.root = root
         self.number_of_nodes_in_tree = 0
@@ -117,7 +119,8 @@ class Tree:
         self.depth = 0
         self.width = 0
 
-        self.__update_index_ids()
+        self.update_nodes()
+        self.__update_index_ids()  # update indexes level-order
         self.calculate_width()
         self.calculate_depth()
 
@@ -148,7 +151,7 @@ class Tree:
         else:
             return None
 
-    def select_and_replace_node(self, rand_range: tuple, node: Node):
+    def select_random_node_and_replace(self, rand_range: tuple, node: Node):
         """
         this function replaces a node with a randomly selected node
         :param rand_range: specifies the range of random number which can be from (0 to number_of_nodes_in_tree)
@@ -199,6 +202,24 @@ class Tree:
         else:
             return None
 
+    def update_nodes(self):
+        """
+        this function updates 3 thing :
+            1 => level of each node
+            2 => parent of each node
+            3 => list of all_terminals and all_functions
+        it uses a recursive function to traverse the tree
+        :return:
+        """
+        if self.root is None:
+            raise Exception("tree is not initialized , root node must not be None")
+
+        self.all_terminals.clear()
+        self.all_functions.clear()
+
+        self.root.parent = None
+        self.__update_nodes_recursively(self.root, 1)
+
     """ private functions """
 
     def __populate_grow_tree(self, parent_node: Node, current_depth: int):
@@ -231,7 +252,6 @@ class Tree:
         :param current_depth:
         :return:
         """
-
         # add terminal for the last level
         if current_depth is self.depth - 1:
             for i in range(parent_node.max_num_of_children):
@@ -260,11 +280,11 @@ class Tree:
                             continue
                         result += '"{0}_{1}" -> "{2}_{3}";\n"{0}_{1}" [label="{4}"];\n"{2}_{3}" [label="{5}"];\n' \
                             .format(
-                                temp_node.index_id, temp_node.label,
-                                temp_node.children_list[i].index_id, temp_node.children_list[i].label,
-                                temp_node.label,
-                                temp_node.children_list[i].label
-                            )
+                            temp_node.index_id, temp_node.label,
+                            temp_node.children_list[i].index_id, temp_node.children_list[i].label,
+                            temp_node.label,
+                            temp_node.children_list[i].label
+                        )
                         if temp_node.children_list[i].type is "T":
                             result += '"{0}_{1}" [shape="box"];\n' \
                                 .format(
@@ -336,3 +356,17 @@ class Tree:
                     break
                 else:
                     self.__replace_node(node_index, current_node.children_list[i], new_node)
+
+    def __update_nodes_recursively(self, parent_node: Node, current_depth: int):
+        if parent_node is not None:
+
+            if parent_node.type is "F":
+                self.all_functions.append(parent_node)
+            else:
+                self.all_terminals.append(parent_node)
+
+            parent_node.level = current_depth
+
+            for i in range(parent_node.max_num_of_children):
+                parent_node.children_list[i].parent = parent_node
+                self.__update_nodes_recursively(parent_node.children_list[i], current_depth + 1)

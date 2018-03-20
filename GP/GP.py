@@ -193,7 +193,7 @@ class GP:
         depth_range = (depth_min_range, depth_max_range)
         # endregion
 
-        parent_1.select_and_replace_node(depth_range, temp_node)
+        parent_1.select_random_node_and_replace(depth_range, temp_node)
 
         # update and reshape the tree if needed
         parent_1.update_tree()
