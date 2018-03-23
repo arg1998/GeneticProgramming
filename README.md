@@ -8,6 +8,24 @@ NOTE : this is just one of my personal projects and first expirence with python,
 and also feel free to fork it and tweak it ...
       
 ***
+# Features
+#### - Independent Fitness Function (FF) :
+one of the key features is that you can implement your own FitnessFunction (or FF) compeletely independent to GP system.
+each Individual has a varibale called ```fitness``` which you can overwrite it in your FF and let the GP system handles the rest of the job.
+
+**NOTE**: in this library, the **Higher** fitness is **Better**. so be careful about fitness calculation in your FF
+
+
+
+
+
+#### - HyperParameter(HP)  and Online Tuning :
+with the use of HyperParameters you can control the decision flow of GP system. for an example
+you can tune the range of selection both in cross-over and mutation while your GP is running
+
+**NOTE**: although theres a few of these HPs, but in the future there will be more
+
+***
 
 # Dependencies
 
