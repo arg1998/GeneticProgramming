@@ -2,6 +2,7 @@ from GP.Utilities import Node
 from GP.Utilities.Tree import Tree
 from graphviz import Digraph
 from copy import deepcopy
+from GP.HyperParameters import HyperParameters as hp
 import random
 
 
@@ -186,8 +187,11 @@ class GP:
         temp_node = parent_2.get_random_node().copy()
 
         # region generating a index range for parent_1
-        depth_min_range = 1
-        depth_max_range = int((4 / 5) * parent_1.number_of_nodes_in_tree)  # todo HC multiplier
+        depth_min_range = hp.GP.cross_over_min_range
+        depth_max_range = int(hp.GP.cross_over_min_range_multiplier * parent_1.number_of_nodes_in_tree)
+        if depth_min_range >= depth_max_range:
+            raise Exception("Invalid Range for crossover replacement : (", depth_min_range, " , ", depth_max_range, ")")
+
         if depth_max_range is 1:
             depth_max_range += 1
         depth_range = (depth_min_range, depth_max_range)
@@ -202,19 +206,20 @@ class GP:
         return parent_1
 
     def __mutate_delete(self, parent: Tree):
-        rand_node_index = random.randrange(0, int(parent.number_of_nodes_in_tree * 0.75))  # todo HC multiplier
+        rand_node_index = random.randrange(0, parent.number_of_nodes_in_tree)
         temp_node: Node = parent.get_node(rand_node_index)
+
         if temp_node is None:
-            raise Exception("Invalid Index")
+            raise Exception("Invalid Node Index")
         while temp_node.type is "T":
-            rand_node_index = random.randrange(0, parent.number_of_nodes_in_tree)  # todo HC multiplier
+            rand_node_index = random.randrange(0, parent.number_of_nodes_in_tree)
             temp_node = parent.get_node(rand_node_index)
 
         for i in range(temp_node.max_num_of_children):
             temp_node.children_list[i] = parent.generate_random_terminal()
 
     def __mutate_change(self, parent: Tree):
-        rand_node_index = random.randrange(0, int(parent.number_of_nodes_in_tree * 0.75))  # todo HC multiplier
+        rand_node_index = random.randrange(0, parent.number_of_nodes_in_tree)
         temp_node: Node = parent.get_node(rand_node_index)
 
         # make sure excluding current terminal won't break our lovely program
@@ -238,7 +243,8 @@ class GP:
             rand_node_index = random.randrange(0, parent.number_of_nodes_in_tree)
             temp_node: Node = parent.get_node(rand_node_index)
 
-        temp_tree = Tree(parent.depth, self.function_set, self.terminal_set)  # todo depth is a hyperparameter
+        final_depth = parent.depth if hp.GP.mutate_add_depth < 2 else hp.GP.mutate_add_depth
+        temp_tree = Tree(final_depth, self.function_set, self.terminal_set)
         temp_tree.populate_random_tree(["grow", "full"].__getitem__(random.randrange(0, 2)))
         temp_node.children_list[random.randrange(0, temp_node.max_num_of_children)] = temp_tree.root
 

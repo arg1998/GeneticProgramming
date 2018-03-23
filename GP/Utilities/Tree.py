@@ -1,4 +1,5 @@
 from GP.Utilities.Node import Node
+from GP.HyperParameters import HyperParameters as hp
 import random
 import queue
 
@@ -180,7 +181,7 @@ class Tree:
         """
 
         if level_order_index_id > self.number_of_nodes_in_tree:
-            return None
+            raise Exception("the Index is higher than total number of nodes in the tree")
 
         if self.root is not None:
             q = queue.Queue()
@@ -200,7 +201,7 @@ class Tree:
                         for i in range(len(temp_node.children_list)):
                             q.put(temp_node.children_list[i])
         else:
-            return None
+            raise Exception("Tree is not initialized for accessing a node. ** root is None **")
 
     def update_nodes(self):
         """
@@ -239,7 +240,7 @@ class Tree:
         else:
             for i in range(parent_node.max_num_of_children):
                 # add a function
-                if random.random() < 0.65:  # todo hardCoded hyperparameter
+                if random.random() < hp.Tree.populate_grow_probability:
                     parent_node.children_list[i] = self.generate_random_function()
                     self.__populate_grow_tree(parent_node.children_list[i], current_depth + 1)
                 else:
