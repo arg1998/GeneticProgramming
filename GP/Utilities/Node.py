@@ -28,6 +28,7 @@ class Node:
         self.index_id: int = index_id
         self.parent: Node = parent
         self.level = 0  # level of this node in tree
+        self.depth_below = 0  # depth of the sub-tree attached to this node (tree below this node )
 
     def copy(self):
         """
@@ -48,5 +49,7 @@ class Node:
             for i in range(len(self.children_list)):
                 if (self.children_list[i] is not None) and (self.children_list[i] is not []):
                     current_depth = max(current_depth, self.children_list[i].depth())
+
+        self.depth_below = current_depth
 
         return current_depth + 1
